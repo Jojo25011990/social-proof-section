@@ -1,0 +1,303 @@
+@forward "./reset";
+
+// Spravit Responsivny Design
+// Pridat Background-images po stranach jak na Desktop/Mobile
+
+// *** Variables ***
+$bg-body: #fff;
+$color-light: #f7f2f7;
+$color-primary: #512051;
+$color-secondary: #ee69a4;
+$color-tertiary: #927b91;
+$color-quaternary: #ef9546;
+
+// *** Mixins ***
+@mixin flex-settings($direction: row, $justify, $align, $gap: null) {
+	display: flex;
+	flex-direction: $direction;
+	justify-content: $justify;
+	align-items: $align;
+
+	@if $gap {
+		gap: $gap;
+	}
+}
+
+@mixin font-settings($size, $weight, $line-height, $l-spacing) {
+	font-size: $size;
+	font-weight: $weight;
+	line-height: $line-height;
+	letter-spacing: $l-spacing;
+}
+
+@mixin respon-design($breakpoint) {
+	@if $breakpoint == desktop {
+		@media (max-width: 1150px) {
+			@content;
+		}
+	}
+
+	@if $breakpoint == desktop-sm {
+		@media (max-width: 915px) {
+			@content;
+		}
+	}
+
+	@if $breakpoint == tablet {
+		@media (max-width: 780px) {
+			@content;
+		}
+	}
+
+	@if $breakpoint == tablet-sm {
+		@media (max-width: 640px) {
+			@content;
+		}
+	}
+
+	@if $breakpoint == mobile {
+		@media (max-width: 375px) {
+			@content;
+		}
+	}
+}
+
+// *** Main Styles ***
+
+html {
+	@include respon-design(desktop) {
+		font-size: 50%;
+	}
+
+	@include respon-design(desktop-sm) {
+		font-size: 42%;
+	}
+
+	@include respon-design(tablet-sm) {
+		font-size: 50%;
+	}
+}
+
+body {
+	@include flex-settings($justify: center, $align: center);
+	width: 100%;
+	min-height: 100vh;
+	font-family: "League Spartan", sans-serif;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: relative;
+
+	@include respon-design(tablet-sm) {
+		min-height: 135vh;
+		align-items: baseline;
+	}
+}
+
+.imgBox__top {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	max-width: 58.4rem;
+}
+
+.imgBox__bottom {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	max-width: 108.5rem;
+
+	@include respon-design(tablet) {
+		position: absolute;
+	}
+}
+
+.main-section {
+	@include flex-settings(column, center, center, 7.1rem);
+
+	width: 144rem;
+	min-height: 100vh;
+	background-color: $bg-body;
+
+	@include respon-design(tablet-sm) {
+		gap: 30rem;
+	}
+
+	// rating part
+
+	&__ratings {
+		@include flex-settings($justify: null, $align: center, $gap: 12.5rem);
+
+		width: 111rem;
+		height: 24.5rem;
+
+		@include respon-design(tablet) {
+			width: 80%;
+			gap: 8rem;
+		}
+		@include respon-design(tablet-sm) {
+			flex-direction: column;
+			gap: 6rem;
+		}
+
+		&-box {
+			@include flex-settings(column, null, null, 1.6rem);
+			width: 44.5rem;
+		}
+
+		&-heading {
+			@include font-settings(5.6rem, 700, 4.8rem, -0.2rem);
+			color: $color-primary;
+		}
+
+		&-text {
+			@include font-settings(1.9rem, 500, 2.5rem, -0.063rem);
+			color: $color-tertiary;
+		}
+
+		&-list {
+			@include flex-settings(column, null, null, 1.6rem);
+
+			width: 54rem;
+			height: 20rem;
+		}
+
+		&-item {
+			@include flex-settings(row, center, center, 3.4rem);
+
+			width: 44.5rem;
+			background-color: $color-light;
+			border-radius: 0.8rem;
+			padding: 2rem 0;
+
+			@include respon-design(tablet-sm) {
+				&:nth-child(1) {
+					align-self: center;
+				}
+			}
+
+			@include respon-design(mobile) {
+				max-width: 32.7rem;
+				flex-direction: column;
+				padding: 1rem 0;
+				gap: 1rem;
+			}
+
+			&:nth-child(2) {
+				align-self: center;
+			}
+
+			&:nth-child(3) {
+				align-self: flex-end;
+
+				@include respon-design(tablet-sm) {
+					align-self: center;
+				}
+			}
+
+			// group stars
+
+			&-stars {
+				display: flex;
+				width: 11.5rem;
+				gap: 0.8rem;
+
+				color: $color-quaternary;
+			}
+
+			// single star
+
+			&-star {
+				@include font-settings(1.655rem, 700, null, null);
+			}
+
+			// sub star text
+			&-text {
+				@include font-settings(1.7rem, 700, null, null);
+
+				color: $color-primary;
+			}
+		}
+	}
+
+	// End of rating part
+
+	//  testimonial cards
+	&__testimonials {
+		width: 111rem;
+		height: 26.6rem;
+		display: flex;
+		gap: 3rem;
+
+		@include respon-design(tablet) {
+			flex-direction: column;
+			align-items: center;
+		}
+
+		&-card {
+			@include flex-settings(column, center, null, 3.1rem);
+
+			width: 35rem;
+			height: 23.4rem;
+			background-color: $color-primary;
+			border-radius: 0.8rem;
+			padding: 0 3.2rem;
+			&:nth-child(2) {
+				align-self: center;
+			}
+
+			&:nth-child(3) {
+				align-self: flex-end;
+
+				@include respon-design(tablet) {
+					align-self: center;
+				}
+			}
+
+			@include respon-design(tablet) {
+				width: 50%;
+				padding: 3.2rem;
+			}
+
+			@include respon-design(tablet-sm) {
+				width: 50%;
+				max-width: 32.7rem;
+				padding: 3.2rem;
+			}
+		}
+
+		&-author {
+			display: grid;
+			grid-template-columns: 4rem 10.3rem 10.3rem;
+			place-items: center;
+			column-gap: 2.3rem;
+			row-gap: 0.4rem;
+		}
+
+		&-avatar {
+			width: 4rem;
+			height: 4rem;
+			border-radius: 50%;
+			grid-row: 1/3;
+		}
+
+		&-name {
+			@include font-settings(1.7rem, 700, null, null);
+			color: $bg-body;
+		}
+
+		&-verified {
+			@include font-settings(1.7rem, 400, null, null);
+			color: $color-secondary;
+			grid-column: 2/3;
+		}
+
+		&-quote {
+			@include font-settings(1.7rem, 500, 2.2rem, -0.03rem);
+
+			color: $bg-body;
+		}
+	}
+	//  End of testimonial cards
+}
